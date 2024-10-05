@@ -96,7 +96,7 @@ export default function ImprovedProjectDashboard() {
           onClick={() => redirectToNewWindow(project.link)}
           className="bg-white hover:bg-white shadow-none px-0 inline-flex items-center mt-4 text-sm font-medium text-blue-600 hover:text-blue-800"
         >
-          View Project
+          View Demo
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </CardContent>
