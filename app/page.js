@@ -1,101 +1,195 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowRight, LayoutGrid, Link, List, Search } from "lucide-react";
+import { useState } from "react";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+// Sample project data
+const projects = [
+  {
+    id: 1,
+    name: "Real Estate Chatbot application",
+    description:
+      "A Real Estate Chatbot application assists users in finding properties by providing listings, scheduling viewings, and answering queries through automated chat. It improves customer engagement and streamlines the property search process for real estate businesses",
+    status: "Live",
+    category: "Web",
+    lastUpdated: "10/5/2024",
+    link: "https://main.dtcngl2lqsmq5.amplifyapp.com/",
+  },
+  {
+    id: 2,
+    name: "Retail Chatbot application",
+    description:
+      "A Retail Chatbot application helps customers browse products, check availability, and track orders through automated chat. It enhances the shopping experience and boosts customer engagement for retail businesses.",
+    status: "Live",
+    category: "Web",
+    lastUpdated: "10/5/2024",
+    link: "https://main.doxlw7orxmrzd.amplifyapp.com/",
+  },
+];
+
+const statusColors = {
+  Live: "bg-green-500",
+  "In Development": "bg-blue-500",
+  Planning: "bg-yellow-500",
+  Beta: "bg-purple-500",
+};
+
+export default function ImprovedProjectDashboard() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
+  const [viewMode, setViewMode] = useState("grid");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading
+  setTimeout(() => setIsLoading(false), 1500);
+
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (activeTab === "All" || project.category === activeTab)
+  );
+
+  function redirectToNewWindow(url) {
+    if (!url) {
+      console.error("URL is required");
+      return;
+    }
+
+    // Open the URL in a new window or tab
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  const ProjectCard = ({ project }) => (
+    <Card className="hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+      <CardHeader>
+        <CardTitle className="flex justify-between items-center">
+          {project.name}
+          <Badge className={`${statusColors[project.status]} text-white`}>
+            {project.status}
+          </Badge>
+        </CardTitle>
+        <CardDescription className="line-clamp-3">
+          {project.description}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-500">
+            Category: {project.category}
+          </span>
+          <span className="text-sm text-gray-500">
+            Updated: {project.lastUpdated}
+          </span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button
+          onClick={() => redirectToNewWindow(project.link)}
+          className="bg-white hover:bg-white shadow-none px-0 inline-flex items-center mt-4 text-sm font-medium text-blue-600 hover:text-blue-800"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          View Project Details
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </CardContent>
+    </Card>
+  );
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold mb-8 text-gray-800">
+          Project Dashboard
+        </h1>
+
+        <div className="mb-8 flex items-center space-x-4">
+          <div className="relative flex-grow">
+            <Input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-white"
+            />
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={20}
+            />
+          </div>
+          <div className="flex space-x-2">
+            <Button
+              variant={viewMode === "grid" ? "default" : "outline"}
+              size="icon"
+              onClick={() => setViewMode("grid")}
+            >
+              <LayoutGrid size={20} />
+            </Button>
+            <Button
+              variant={viewMode === "list" ? "default" : "outline"}
+              size="icon"
+              onClick={() => setViewMode("list")}
+            >
+              <List size={20} />
+            </Button>
+          </div>
+        </div>
+
+        <Tabs defaultValue="All" className="mb-8">
+          <TabsList>
+            <TabsTrigger value="All" onClick={() => setActiveTab("All")}>
+              All
+            </TabsTrigger>
+            <TabsTrigger value="Web" onClick={() => setActiveTab("Web")}>
+              Web
+            </TabsTrigger>
+            <TabsTrigger value="Mobile" onClick={() => setActiveTab("Mobile")}>
+              Mobile
+            </TabsTrigger>
+            <TabsTrigger
+              value="Desktop"
+              onClick={() => setActiveTab("Desktop")}
+            >
+              Desktop
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <Card key={index} className="animate-pulse">
+                <CardHeader>
+                  <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div
+            className={`grid gap-6 ${
+              viewMode === "grid"
+                ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                : "grid-cols-1"
+            }`}
+          >
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
