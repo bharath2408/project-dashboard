@@ -28,13 +28,23 @@ const projects = [
   },
   {
     id: 2,
-    name: "Retail Chatbot application",
+    name: "Retail Chatbot application (ACE)",
     description:
       "A Retail Chatbot application helps customers browse products, check availability, and track orders through automated chat. It enhances the shopping experience and boosts customer engagement for retail businesses.",
-    status: "Live",
+    status: "In Development",
     category: "Web",
     lastUpdated: "10/5/2024",
     link: "https://main.doxlw7orxmrzd.amplifyapp.com/",
+  },
+  {
+    id: 3,
+    name: "Retail Chatbot application (Lenovo)",
+    description:
+      "A Retail Chatbot application helps customers browse products, check availability, and track orders through automated chat. It enhances the shopping experience and boosts customer engagement for retail businesses.",
+    status: "In Development",
+    category: "Web",
+    lastUpdated: "10/5/2024",
+    link: "https://main.d1wqhvzglz9yn6.amplifyapp.com/",
   },
 ];
 
