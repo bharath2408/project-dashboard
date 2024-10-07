@@ -46,6 +46,16 @@ const projects = [
     lastUpdated: "10/5/2024",
     link: "https://main.d1wqhvzglz9yn6.amplifyapp.com/",
   },
+  {
+    id: 4,
+    name: "Chat with Document",
+    description:
+      "Chat with Document lets users chat with documents, quickly retrieving and summarizing information using a natural language interface, powered by AI for easy data extraction.",
+    status: "Live",
+    category: "Web",
+    lastUpdated: "10/7/2024",
+    link: "http://54.164.209.139:8501/",
+  },
 ];
 
 const statusColors = {
