@@ -34,7 +34,7 @@ const projects = [
     status: "In Development",
     category: "Web",
     lastUpdated: "10/5/2024",
-    link: "https://main.doxlw7orxmrzd.amplifyapp.com/",
+    link: "https://main.d2axcmmvnw8pt3.amplifyapp.com",
   },
   {
     id: 3,
